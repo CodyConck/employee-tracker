@@ -1,0 +1,26 @@
+DROP DATABASE IF EXISTS tracker_db;
+CREATE DATABASE tracker_db;
+
+USE tracker_db;
+
+CREATE TABLE department(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    department_name VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE roles(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    title VARCHAR(30) NOT NULL,
+    salary DECIMAL(60, 1) NOT NULL,
+    department_id INTEGER NOT NULL,
+    CONSTRAINT department_id FOREIGN KEY(department_id) REFERENCES department(id) ON DELETE CASCADE
+);
+
+CREATE TABLE employee(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INTEGER NOT NULL,
+    CONSTRAINT role_id FOREIGN KEY(role_id) REFERENCES roles(id) ON DELETE CASCADE,
+    manager_id INTEGER(4)
+);
