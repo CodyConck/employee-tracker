@@ -5,7 +5,7 @@ USE tracker_db;
 
 CREATE TABLE department(
     id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    department_name VARCHAR(30) NOT NULL
+    name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE roles(
