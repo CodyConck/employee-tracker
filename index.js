@@ -14,13 +14,13 @@ function userQuestions() {
         .then((answer) => {
             switch (answer.menu) {
                 case 'View All Departments':
-                    departments();
+                    seeDepartments();
                     break;
                 case 'View Roles':
-                    roles();
+                    seeRoles();
                     break;
                 case 'View Employees':
-                    employees();
+                    seeEmployees();
                     break;
                 case 'Add Departments':
                     addDepartmentsPrompt();
@@ -58,7 +58,7 @@ function addDepartmentsPrompt() {
 }
 
 //query db to view all departments
-function departments() {
+function seeDepartments() {
     dbData.query(`SELECT * FROM department`, (err, result) => {
         console.table(result);
         return userQuestions();
@@ -66,31 +66,26 @@ function departments() {
 };
 
 
-function roles() {
+function seeRoles() {
     dbData.query(`SELECT * FROM roles`, (err, result) => {
         console.table(result);
         return userQuestions();
     })
 };
 
-function employees() {
-    dbData.query(`SELECT 
-
-    employee.id, employee.first_name, employee.last_name, roles.title AS job_title, department.name AS department, roles.salary
-    
-    FROM employee
-    
-    JOIN roles ON employee.role_id = roles.id
-    
-    JOIN department ON roles.department_id = department.id;`, (err, result) => {
-        console.table(result);
-        return userQuestions();
+function seeEmployees() {
+    db.selectAllEmployees()
+    .then(([rows]) => {
+        let employees = rows
+        console.log("\n")
+        console.table(employees)
     })
-};
+    .then(() => userQuestions())
+}
 
 function addNewDepartment() {
     prompt([{
-        name: 'newDeptartment',
+        name: 'name',
         message: 'Please enter the name of your new department.'
     }]).then(res => {
         let name = res
