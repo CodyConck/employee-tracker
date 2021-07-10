@@ -57,27 +57,31 @@ function addDepartmentsPrompt() {
     })
 }
 
-//query db to view all departments
 function seeDepartments() {
-    dbData.query(`SELECT * FROM department`, (err, result) => {
-        console.table(result);
-        return userQuestions();
+    db.seeAllDepartments()
+    .then(([rows]) => {
+        let departments = rows
+        console.log('\n')
+        console.table(departments)
     })
+    .then(() => userQuestions()) 
 };
 
-
 function seeRoles() {
-    dbData.query(`SELECT * FROM roles`, (err, result) => {
-        console.table(result);
-        return userQuestions();
+    db.seeAllRoles()
+    .then(([rows]) => {
+        let roles = rows
+        console.log('\n')
+        console.table(roles)
     })
+    .then(() => userQuestions()) 
 };
 
 function seeEmployees() {
     db.selectAllEmployees()
     .then(([rows]) => {
         let employees = rows
-        console.log("\n")
+        console.log('\n')
         console.table(employees)
     })
     .then(() => userQuestions())
